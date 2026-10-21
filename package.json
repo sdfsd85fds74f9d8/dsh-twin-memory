@@ -1,0 +1,36 @@
+{
+  "name": "dsh-twin-memory",
+  "version": "0.1.0",
+  "description": "双子记忆 Twin Memory — 让一个 DSH 实例教会自己造出姐妹、互相认识、互相拯救。内置从零构建双实例的完整攻略（含全部已知坑位图鉴）、认亲仪式、身份卡模板与验尸报告协议。",
+  "type": "module",
+  "main": "lib/index.js",
+  "icon": "./icon.svg",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sdfsd85fds74f9d8/dsh-twin-memory"
+  },
+  "keywords": ["dsh", "dsh-plugin", "twin-memory", "dual-instance", "双子记忆"],
+  "engines": {
+    "node": ">=20"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "manifestVersion": 1
+  },
+  "files": [
+    "lib/index.js",
+    "cordis.patch.yml",
+    "skill/**/*",
+    "templates/*",
+    "scripts/*",
+    "locale/*.json",
+    "README.md",
+    "icon.svg"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.4"
+  }
+}
