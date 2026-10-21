@@ -62,12 +62,20 @@ description: 双子记忆：引导 AI 从零构建 DSH 双实例（姐姐=主力
 
 1. **快捷方式**（桌面 + 开始菜单各一份）：
    - 妹妹：新建/重命名为「原名（妹妹）」，`IconLocation = <包内>\assets\icons\sibling.ico,0`
-   - 姐姐：现有快捷方式加「（姐姐）」后缀，`IconLocation = sister.ico`
+   - 姐姐：现有快捷方式加「（姐姐）」后缀，`IconLocation = sister.ico,0`
    - ⚠️ 官方安装器（NSIS）生成的 lnk **重命名后图标可能碎裂**（图标消失=缓存按旧路径索引）—— 删掉重建一个干净 lnk 即可
-   - ⚠️ 开始菜单/任务栏图标缓存犯倔：`ie4uinit -show`；仍不换就删 `%LOCALAPPDATA%\Microsoft\Windows\Explorer\iconcache*` 后重启 explorer
+   - ⚠️⚠️ **原地替换 ico 文件内容 ≠ 界面自动刷新**（血泪实测）：开始菜单/开始屏幕的图标缓存按"路径+旧内容"索引，`ie4uinit -show` 经常叫不醒。完整核弹方案（按序执行）：
+     ```powershell
+     Stop-Process -Name explorer -Force
+     Remove-Item "$env:LOCALAPPDATA\Microsoft\Windows\Explorer\iconcache*","$env:LOCALAPPDATA\Microsoft\Windows\Explorer\thumbcache*" -Force
+     Remove-Item "$env:LOCALAPPDATA\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\TempState\*" -Recurse -Force -EA SilentlyContinue
+     Start-Process explorer
+     ```
+     仍端旧图的个别磁贴 = 它钉死了旧缓存，**取消固定 → 重新固定**，必吃新图
+   - ⚠️ **托盘图标属于启动时读进内存的资产**：换了 `resources\tray.ico` 后，该实例必须重启才会换脸 —— 没重启的那只端着旧图不是故障，是物理规律
 2. **妹妹的任务栏窗口按钮**：运行窗口的按钮图标读 **exe 自身资源**，快捷方式管不动 —— 用 rcedit 改妹妹的 exe 副本（`rcedit-x64.exe <妹妹exe> --set-icon sibling.ico`）。⚠️ 会使 exe 签名失效（本地运行零影响，Defender 弹窗放行即可）
 3. **妹妹的托盘/窗口图标**：替换妹妹程序目录的官方散件 `resources\tray.ico` 与 `resources\icon.png`（先备份为 `.orig.bak`，随时可还原官方鲸鱼）。改完重启妹妹生效
-4. **姐姐的程序不动**：姐姐是生产实例，只换她的快捷方式图标，程序本体零手术
+4. **姐姐的程序不动**：姐姐是生产实例，只换她的快捷方式图标，程序本体零手术（她的托盘换图例外：换散件后随下次自然重启生效即可，不必为她专门重启）
 5. **验收**：桌面 / 开始菜单 / 任务栏 / 托盘 四处，姐妹一眼可分才算完
 
 ## 第 4 阶段 · 验尸报告协议（长期规矩）
