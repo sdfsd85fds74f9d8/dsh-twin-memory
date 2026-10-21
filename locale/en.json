@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Twin Memory",
-    "description": "\"No one can save you but your other self.\" A memory plugin for DSH dual instances that injects a resident identity card into each instance: (1) self-cognition — know whether you are the elder or the twin-sister, your port and data home; (2) sister profile — recognize the other instance's address and taboos so it is never mistaken for junk; (3) rescue handbook — startup, re-patching, known landmines and autopsy mnemonics; (4) incident reports — the rescuer leaves a signed report, the revived twin verifies and acknowledges; (5) living-memory protocol — whoever changes dual-instance assets updates both cards on the spot. The from-zero dual-instance playbook ships as a built-in skill: just say \"build me a dual instance\"."
+    "description": "\"No one can save you but your other self.\" A memory plugin for DSH dual instances that injects a resident identity card into each instance: (1) self-cognition - know whether you are the elder or the younger twin, your port and data home; (2) sister profile - recognize the other instance's address and taboos so it is never mistaken for junk; (3) rescue handbook - startup, re-patching, known landmines and autopsy mnemonics; (4) incident reports - the rescuer leaves a signed report, the revived twin verifies and acknowledges; (5) living-memory protocol - whoever changes dual-instance assets updates both cards on the spot."
   }
 }
