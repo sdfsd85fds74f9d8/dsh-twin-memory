@@ -1,4 +1,4 @@
-# 双子记忆 · 哨兵 v2（护士语义收窄版）
+﻿# 双子记忆 · 哨兵 v2（护士语义收窄版）
 # 铁律：只救"垂死"，不复活"已故"。
 #   半死（进程树在、端口死）→ 尸体，杀树重拉
 #   全没 + 近期 crash 日志   → 病死，重拉
@@ -63,13 +63,16 @@ function Rescue-B {
   & cscript.exe //nologo 'D:\dsh\DSH-B\launch-b.vbs'
   Start-Sleep -Seconds 75
   if (Test-Port 19388) { Log 'B L1 救活'; return $true }
-  # L2：幂等检查端口补丁（纯读+必要时官方幂等脚本）
+  # L2：端口补丁检查（考试抓出的顺序 bug 已修：先清尸释放 asar 句柄→再补丁→验证→拉起）
   $patchOut = & 'C:\nodejs\node.exe' 'D:\dsh\DSH-B\patch-asar-any.mjs' 'D:\dsh\DSH-B\app\resources\app.asar' 'dsh/node_modules/@deepseek-ai/dsh-desktop-host/lib/index.js' '19388' '19387' --verify-only 2>&1 | Out-String
   if ($patchOut -match 'occurrences=0') {
-    Log 'B L2：端口补丁丢失 → 幂等重破甲'
+    Log 'B L2：端口补丁丢失 → 清尸释放句柄 → 幂等重破甲 → 验证'
+    [void](Stop-Corpse $B_PREFIX); Start-Sleep -Seconds 5
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File 'D:\dsh\DSH-B\新版后重破甲.ps1' 2>&1 | Out-Null
-    [void](Stop-Corpse $B_PREFIX); Start-Sleep -Seconds 3
-    & cscript.exe //nologo 'D:\dsh\DSH-B\launch-b.vbs'; Start-Sleep -Seconds 75
+    $recheck = & 'C:\nodejs\node.exe' 'D:\dsh\DSH-B\patch-asar-any.mjs' 'D:\dsh\DSH-B\app\resources\app.asar' 'dsh/node_modules/@deepseek-ai/dsh-desktop-host/lib/index.js' '19388' '19387' --verify-only 2>&1 | Out-String
+    if ($recheck -match 'occurrences=1') { Log 'B L2：补丁恢复且验证通过，重拉' }
+    else { Send-SOS 'B' '重破甲后验证仍失败（句柄或磁盘异常），需医生人工' ; return $false }
+    & cscript.exe //nologo 'D:\dsh\DSH-B\launch-b.vbs'; Start-Sleep -Seconds 90
     if (Test-Port 19388) { Log 'B L2 救活'; return $true }
   }
   Send-SOS 'B' '拉起+重破甲后 19388 仍无监听'
@@ -104,5 +107,15 @@ function Rescue-A {
 if ($Target -eq 'B') { $ok = Rescue-B }
 elseif ($Target -eq 'A') { $ok = Rescue-A }
 else { $okB = Rescue-B; $okA = Rescue-A; $ok = $okA -and $okB }
+
+# 器官巡检（E3 考试发现的盲区：植物人=端口在听但插件器官缺席）
+function Test-Organ([int]$port) {
+  $hp = (Get-NetTCPConnection -State Listen -LocalPort $port -EA SilentlyContinue | Select-Object -First 1).OwningProcess
+  if (-not $hp) { return }
+  $kids = @(Get-CimInstance Win32_Process | Where-Object { $_.ParentProcessId -eq $hp -and $_.Name -match 'python|scrapling|pwsh|node' }).Count
+  if ($kids -lt 1) { Log "警告：端口 $port 在听但宿主无器官子进程（疑似配置植物人态），需医生查 cordis —— 哨兵不越权自动处理" }
+}
+if (Test-Port 19388) { Test-Organ 19388 }
+if (Test-Port 19387) { Test-Organ 19387 }
 Remove-Item $lock -Force -EA SilentlyContinue
 if (-not $Quiet) { exit $(if ($ok) { 0 } else { 1 }) }
