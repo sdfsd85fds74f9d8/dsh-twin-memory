@@ -1,4 +1,4 @@
-﻿# 双子记忆 · 异地保险柜（中立区备份，快照不能和房子一起烧）
+# 双子记忆 · 异地保险柜（中立区备份，快照不能和房子一起烧）
 # 用法: offsite-export.ps1          → 备份 A+B
 #       offsite-export.ps1 -Only A  → 只备份 A
 param([ValidateSet('A','B')][string]$Only)

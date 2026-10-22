@@ -1,3 +1,9 @@
 # Twin Memory 挂载声明：本体是薄载体（无工具、无网关契约、零地雷面）
 - id: twin-memory
   name: dsh-twin-memory
+
+# v2.0 合体：时光机（vendored undo 引擎，MIT © upstream authors）
+# 引擎代码住在本插件 vendor/ 目录，经 dshHomePath 解析 —— 不依赖外部插件。
+- insert:
+    - id: dsh-undo
+      name: !!js dshHomePath('plugins/dsh-twin-memory/vendor/dsh-undo-savepoint')

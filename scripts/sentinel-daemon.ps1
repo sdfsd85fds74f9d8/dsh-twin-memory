@@ -1,4 +1,4 @@
-﻿# 双子记忆 · 哨兵daemon（常驻版，替代计划任务 —— 本机 schtasks 无权限）
+# 双子记忆 · 哨兵daemon（常驻版，替代计划任务 —— 本机 schtasks 无权限）
 # 每 5 分钟巡检一次；每天 03:30 前后触发一次异地备份。
 $ErrorActionPreference = 'Continue'
 $scripts = Split-Path $MyInvocation.MyCommand.Path
