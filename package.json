@@ -1,6 +1,6 @@
 {
   "name": "dsh-twin-memory",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "「没人可以拯救你，除了另一个自己。」双子记忆 v2 合体版：一个插件内置攻略 + 身份卡 + 时光机（vendored 快照/回退/消息级撤回/体检引擎，MIT 授权收编）。列表里只见双子，不见 undo —— 插件列表一行，功能一样不少。零常驻进程，跑起来的只有 AI 本身。",
   "type": "module",
   "main": "lib/index.js",

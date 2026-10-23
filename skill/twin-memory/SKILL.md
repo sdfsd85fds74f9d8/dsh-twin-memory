@@ -84,7 +84,7 @@ description: 双子记忆：引导 AI 从零构建 DSH 双实例（姐姐=主力
 
 ## 第 5 阶段 · 时光机（v2 起内置，开箱即有）
 
-**自 v2.0 起，时光机引擎（配置快照 / undo / redo / 定点恢复 / 消息级文件撤回 / 存档体检 / 安全模式）已按 MIT 授权收编进本包 `vendor/`**，挂载在包内 patch 完成（`dshHomePath` 解析到 `<数据家>/plugins/dsh-twin-memory/vendor/`）。装本插件 = 自动拥有时光机，**无需任何外部 undo 插件** —— 插件列表只见双子一行。装完立一条戒律写进两张卡：
+**自 v2.0 起，时光机引擎（配置快照 / undo / redo / 定点恢复 / 消息级文件撤回 / 存档体检 / 安全模式）已按 MIT 授权收编进本包 `vendor/`**，挂载在包内 patch 完成（`dshHomePath` 解析到 `<数据家>/plugins/dsh-twin-memory/vendor/`）。装本插件 = 自动拥有时光机，**无需任何外部 undo 插件** —— 插件列表只见双子一行（vendored 引擎内部包名为 `twin-time-machine`，不会与独立的 dsh-undo-savepoint 冲突）。装完立一条戒律写进两张卡：
 
 > **sync 戒律**：时光机的远端同步（Git/WebDAV）**只许配给一只**（建议只给姐姐）。两只接同一同步源 = 妹妹配置被推给姐姐 = 隔离击穿 = 对照组死刑。不配置它就是死功能，用戒律不用砍刀。
 

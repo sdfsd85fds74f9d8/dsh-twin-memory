@@ -1,7 +1,7 @@
 {
-  "name": "dsh-undo-savepoint",
+  "name": "twin-time-machine",
   "version": "0.4.10",
-  "description": "DSH undo/rollback system: snapshot config files on change, undo/redo the last action from the WebUI or by chat, and roll back broken plugin trees without reinstalling. Works even when DSH fails to boot (offline CLI + GUI).",
+  "description": "Twin Memory built-in time machine (vendored from dsh-undo-savepoint, MIT)",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
